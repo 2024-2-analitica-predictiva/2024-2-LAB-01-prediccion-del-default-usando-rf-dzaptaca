@@ -121,16 +121,16 @@ categorical_columns = ['SEX', 'EDUCATION', 'MARRIAGE']
 
 # Bloque 3: Preprocesamiento de variables categóricas
 # Usamos un transformador personalizado para castear y luego aplicar One-Hot Encoding
-categorical_transformer = Pipeline(steps=[
-    ('cast_to_int', CastToInteger(categorical_columns)),  # Castear columnas categóricas a entero
-    ('imputer', SimpleImputer(strategy='most_frequent')),  # Imputar valores faltantes si existieran
-    ('onehot', OneHotEncoder(handle_unknown='ignore'))    # Aplicar One-Hot Encoding
-])
+# categorical_transformer = Pipeline(steps=[
+#     ('cast_to_int', CastToInteger(categorical_columns)),  # Castear columnas categóricas a entero
+#     ('imputer', SimpleImputer(strategy='most_frequent')),  # Imputar valores faltantes si existieran
+#     ('onehot', OneHotEncoder(handle_unknown='ignore'))    # Aplicar One-Hot Encoding
+# ])
 
 # Bloque 4: Crear el ColumnTransformer para aplicar transformaciones específicas
 preprocessor = ColumnTransformer(
     transformers=[
-        ('cat', categorical_transformer, categorical_columns)  # Transformar solo las categóricas
+        ('cat', OneHotEncoder, categorical_columns)  # Transformar solo las categóricas
     ],
     remainder='passthrough'  # Mantener las columnas numéricas sin cambios
 )
